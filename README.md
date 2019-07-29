@@ -1,5 +1,9 @@
 # Sharetribe
 
+https://medium.com/@denisbeklarov/sharetribe-digital-ocean-ubuntu-16-04-installation-step-by-step-4a7b3d978c80
+
+https://freedif.org/how-to-install-sharetribe-for-ubuntu-16-04
+
 [![CircleCI](https://circleci.com/gh/sharetribe/sharetribe/tree/master.svg?style=svg)](https://circleci.com/gh/sharetribe/sharetribe/tree/master) [![Dependency Status](https://gemnasium.com/sharetribe/sharetribe.png)](https://gemnasium.com/sharetribe/sharetribe) [![Code Climate](https://codeclimate.com/github/sharetribe/sharetribe.png)](https://codeclimate.com/github/sharetribe/sharetribe)
 
 Sharetribe is an open source platform to create your own peer-to-peer marketplace.
@@ -64,86 +68,6 @@ Before you get started, the following needs to be installed:
 
 ### Setting up the development environment
 
-1.  Get the code. Clone this git repository and check out the latest release:
-
-    ```bash
-    git clone git://github.com/sharetribe/sharetribe.git
-    cd sharetribe
-    git checkout latest
-    ```
-
-1.  Install the required gems by running the following command in the project root directory:
-
-    ```bash
-    bundle install
-    ```
-
-    **Note:** [`libv8` might fail to build with Clang 7.3](https://github.com/cowboyd/libv8/pull/207), in that case you can try installing V8 manually:
-
-    ```bash
-    brew tap homebrew/versions
-    brew install v8-315
-
-    gem install libv8 -v '3.16.14.13' -- --with-system-v8
-    gem install therubyracer -- --with-v8-dir=/usr/local/opt/v8-315
-
-    bundle install
-    ```
-
-1.  Install node modules:
-
-    ```bash
-    npm install
-    ```
-
-1.  Create a `database.yml` file by copying the example database configuration:
-
-    ```bash
-    cp config/database.example.yml config/database.yml
-    ```
-
-1.  Add your database configuration details to `config/database.yml`. You will probably only need to fill in the password for the database(s).
-
-1.  Create a `config.yml` file by copying the example configuration file:
-
-    ```bash
-    cp config/config.example.yml config/config.yml
-    ```
-
-1.  Create and initialize the database:
-
-    ```bash
-    bundle exec rake db:create db:structure:load
-    ```
-
-1.  Run Sphinx index:
-
-    ```bash
-    bundle exec rake ts:index
-    ```
-
-    **Note:** If your MySQL server is configured for SSL, update the `config/thinking_sphinx.yml` file and uncomment the `mysql_ssl_ca` lines. Configure correct SSL certificate chain for connection to your database over SSL.
-
-1.  Start the Sphinx daemon:
-
-    ```bash
-    bundle exec rake ts:start
-    ```
-
-1.  Start the development server:
-
-    ```bash
-    foreman start -f Procfile.static
-    ```
-
-1.  Invoke the delayed job worker in a new console (open the project root folder):
-
-    ```bash
-    bundle exec rake jobs:work
-    ```
-
-
-Congratulations! Sharetribe should now be up and running for development purposes. Open a browser and go to the server URL (e.g. http://lvh.me:3000 or http://lvh.me:5000). Fill in the form to create a new marketplace and admin user. You should be now able to access your marketplace and modify it from the admin area.
 
 ### Mailcatcher
 
@@ -182,45 +106,6 @@ To update your local database schema to the newest version, run database migrati
 
 ### Running tests
 
-Tests are handled by [RSpec](http://rspec.info/) for unit tests and [Cucumber](https://cucumber.io/) for acceptance tests.
-
-Remember to follow *all* the steps listed in the [Setting up the development environment](#setting-up-the-development-environment) paragraph before running tests because some tests depend on webpack assets.
-
-1.  Navigate to the root directory of the sharetribe project
-
-1.  Initialize your test database:
-
-    ```bash
-    bundle exec rake test:prepare
-    ```
-
-    This needs to be rerun whenever you make changes to your database schema.
-
-1.  If Zeus isn't running, start it:
-
-    ```bash
-    zeus start
-    ```
-
-1.  To run unit tests, open another terminal and run:
-
-    ```bash
-    zeus rspec spec
-    ```
-
-1.  To run acceptance tests, open another terminal and run:
-
-    ```bash
-    zeus cucumber
-    ```
-
-    Note that running acceptance tests is slow and may take a long time to complete.
-
-To automatically run unit tests when code is changed, start [Guard](https://github.com/guard/guard):
-
-  ```bash
-  bundle exec guard
-  ```
 
 ### Working with React, Webpack and Foreman
 
